@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="dist/js/vue.js"></script>
+</head>
+<body>
+    <div id="box">
+        <p>在生命周期钩子函数中, 会自动绑定上下文vue实例为<br>
+                这意味着你不能使用箭头函数来定义一个生命周期方法 (例如 created: () => this.fetchTodos())。
+                这是因为箭头函数绑定了父上下文，因此 this 与你期待的 Vue 实例不同<br>
+        </p>
+
+        <p>data: {{msg}}</p>
+        <button @click="update">翻转按钮</button>
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el: "#box",
+            data: {
+                msg: ""
+            },
+            methods : {
+                update : function() {
+                    if (this.msg == "") {
+                        this.msg = "abasd";
+                    }
+                    this.msg = this.msg.split("").reverse().join("");
+                }
+            },
+            beforeCreate: function() {
+                console.log("Before Create!");
+            },
+            created: function() {
+                console.log("created!");
+            },
+            beforeMount: function() {
+                console.log("beforeMount!");
+            },
+            mounted: function() {
+                console.log("mounted!");
+            },
+            beforeUpdate: function() {
+                console.log("beforeUpdate!");
+            },
+            updated: function() {
+                console.log("updated!");
+            },
+            activated: function() {
+                console.log("activated!");
+            },
+            deactivated: function() {
+                console.log("deactivated!");
+            },
+            beforeDestroy: function() {
+                console.log("beforeDestroy!");
+            },
+            destroyed: function() {
+                console.log("destroyed!");
+            },
+            errorCaptured: function(err, component, info) {
+                console.log("errorCaptured!");
+            },
+        });
+    </script>
+</body>
+</html>

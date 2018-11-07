@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="dist/js/vue.js"></script>
+    <script src="../node_modules/axios/dist/axios.js"></script>
+</head>
+<body>
+    <div id="box">
+        <ol>
+            <li>
+                <h3>watch 用于监听一个属性,当其变化时执行逻辑更新另外一个属性, 类似计算属性</h3>
+                输入问题: <input type="text" v-model="quest"> 
+                答案: <span>{{answer}}</span>
+            </li>
+            <li>
+                <h3>watch经常用于执行一些异步或比较耗时的逻辑</h3>
+                <h4>模拟百度搜索</h4>
+                <p>请输入搜索关键字:</p>
+                <input type="text" v-model="kw">
+                <ul v-show="kwlist.length > 0">
+                    <li v-for="item in kwlist">{{item}}</li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el: "#box",
+            data: {
+                answer: "目前没有问题!",
+                quest: "",
+                kw: "",
+                kwlist : []
+            },
+            watch : {
+                quest: function(newq, oldq) {
+                    console.log(newq, oldq);
+                    this.answer = "answer is:" + newq;
+                },
+                kw: function(newq, oldq) {
+                    this.getquest(newq);
+                }
+            },
+            methods : {
+                getquest(newq) {
+                    console.log("will goto baidu :" + newq);
+                    axios.get("a.txt", {
+                        params: {'wd':newq, 'json': '1'}
+                    }).then (function(res) {
+                        console.log(res);
+                        console.log(res.data);
+                        this.kwlist = res.data;
+                    }).catch(function(err) {
+                        console.log(err);
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+</html>

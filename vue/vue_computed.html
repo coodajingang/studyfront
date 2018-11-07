@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="dist/js/vue.js"></script>
+</head>
+<body>
+    <div id="box">
+        <ol>
+            <li>
+                <h3>计算属性的使用, 默认只有get方法.</h3>
+                <input v-model="firstname1">
+                <input v-model="secondname1">
+                <input v-model="fullname1">
+            </li>
+            <li>
+                <h3>计算属性的使用, get set 方法.</h3>
+                <input v-model="firstname2">
+                <input v-model="secondname2">
+                <input v-model="fullname2">
+            </li>
+            <li>
+                <h3>单选 全选</h3>
+                <input type="checkbox" v-model="check1" name="水果1">水果1
+                <input type="checkbox" v-model="check2" name="水果2">水果2
+                <input type="checkbox" v-model="checkall" name="">全部选择/取消
+            </li>
+        </ol>
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el: "#box",
+            data: {
+                firstname1: "",
+                secondname1: "",
+                firstname2: "",
+                secondname2: "",
+                check1: false,
+                check2:false
+            }, 
+            computed : {
+                fullname1: function() {
+                    return this.firstname1 + " " + this.secondname1;
+                },
+                fullname2: {
+                    get: function() {
+                        if (this.firstname2 == "") {
+                            return "";
+                        }else if (this.secondname2 == "") {
+                            return this.firstname2;
+                        }
+                        return this.firstname2 + " " + this.secondname2;
+                    },
+                    set: function(val) {
+                        if (val == "" || val == undefined) {
+                            this.firstname2 = "";
+                            this.secondname2 = "";
+                            return;
+                        } else {
+                            var names = val.split(" ");
+                            if (names.length ==1) {
+                                this.firstname2 = val;
+                            } else {
+                                this.secondname2 = names[names.length -1];
+                                this.firstname2 = names[0];
+                            }
+                            
+                            
+                        }
+
+                    }
+                },
+                checkall : {
+                    get :function() {
+                        return this.check1 && this.check2;
+                    },
+                    set : function(val) {
+                        this.check1 = this.check2 = val;
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="dist/js/vue.js"></script>
+</head>
+<body>
+    
+    <div id="box">
+        <h2>使用{{}}来绑定数据, 在控制台可以通过vm.$data.msg 或 vm.msg来获取修改数据.</h2>
+
+        <span>{{msg}}</span>
+        <br>
+        <h2>当msg中有转移标签时, 如何其转移显示???? 请使用 v-html</h2>
+        <span>{{msg1}}</span> <br>
+        <span v-html="msg1"></span>
+
+        <h2>文本标签中的大括号如何不被转义? v-pre</h2>
+        <p v-pre> {{这是一个Mustache}}</p>
+        <br>
+        <h2>属性绑定, 若无事件等修改之, 则不会自动变更!</h2>
+        <span v-bind:title="title">鼠标悬停查看显示 !</span>
+
+        <h2>v-if=true/false 来显示或隐藏元素;  当v-if=false时, dom树中无此元素</h2>
+        <div v-if="false">hidden  div </div>
+        <div v-if="true"> 显示 div</div>
+
+        <h2>循环显示array, 允许元素重复</h2>
+        <ul>
+            <li v-for="(val,key) in list">{{val}} ,index= {{key}}</li>
+        </ul>
+        <h2>循环显示dict, 允许元素重复</h2>
+        <ol>
+            <li v-for="(item, key) in dt1">key={{key}}, name={{item.name}} , age={{item.age}}</li>
+        </ol>
+
+        <h2>v-on 事件逆转msg2</h2>
+        <p>原翻转字符串: {{orimsg}}</p>
+        <p>翻转字符串: {{revmsg}}</p>
+        <button v-on:click="reversMsg">翻转</button>
+
+        <h2>v-model 输入绑定</h2>
+        <p>{{inputmsg}}</p>
+        <input v-model="inputmsg">
+
+        <h2>组件</h2>
+        <ul>
+            <todo-item v-for="item in todolist" v-bind:todo="item"></todo-item>
+        </ul>
+
+    </div>
+
+    <script>
+        Vue.component('todo-item',{
+            template: '<li>{{todo.text}}</li>',
+            props: ['todo']
+        });
+
+        var vm = new Vue({
+            el: "#box",
+            data: {
+                msg: "asdf",
+                msg1: "这是个转移标签, <b>加粗</b>显示内容!",
+                title: "页面加载于 " + new Date().toLocaleString(),
+                list: [1,2,3, "apple", "orange", "sutudent", true, 380.99],
+                dt1 : [{name:"llili", age:18},{name:"songhao", age:37}],
+                orimsg: "The number of the 调和奶粉!!!啊啊阿道夫!!asdf.",
+                revmsg: "",
+                inputmsg: "",
+                todolist : [{id:1, text:"打酱油"},{id:2, text:"打酱油2"},{id:3, text:"打酱油3"}]
+            },
+            methods: {
+                reversMsg() {
+                    this.revmsg = this.orimsg.split("").reverse().join('');
+                }
+            }
+        });
+    </script>
+</body>
+</html>

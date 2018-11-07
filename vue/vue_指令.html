@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="dist/js/vue.js"></script>
+</head>
+<body>
+    <div id="box">
+        <ol>
+            <li>
+                <h3>v-if v-else v-else-if</h3>
+                <h4>使用v-else-if时：前一兄弟元素必须有 v-if 或 v-else-if</h4>
+
+            </li>
+            <li>
+                <h3>v-show vs  v-if</h3>
+                <p v-show="seen">使用 v-show 是 display none</p>
+                <p v-show="!seen">使用 v-show 是 display none</p>
+                <p v-if="seen">使用 v-if 是 不渲染该dom元素</p>
+                <p v-if="!seen">使用 v-if 是 不渲染该dom元素</p>
+            </li>
+            <li>
+                <h3>v-cloak 用来在插值计算成功前不显示, 防止用户刷新页面时看到花括号.</h3>
+            </li>
+            <li>
+                <h3 v-pre>v-text vs {{}}
+                </h3>
+                <h4 v-pre>更新元素的 textContent。如果要更新部分的 textContent ，需要使用 {{ Mustache }} 插值。</h4>
+            </li>
+            <li>
+                <h3>v-html 将将插值中的html标签渲染出来 </h3>
+                <p>正常插值:  {{msg}}</p>
+                <p>v-html插值: <span v-html="msg"></span> </p>
+            </li>
+        </ol>
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el: "#box",
+            data: {
+                seen: true,
+                msg: "<p>这是一段p文字, <b>加错</b>显示.</p>"
+            }
+        });
+    </script>
+</body>
+</html>
